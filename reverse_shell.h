@@ -32,7 +32,7 @@
 # endif
 
 # ifndef SERVER_HOST
-#  define SERVER_HOST	"127.0.0.1"
+#  define SERVER_HOST	"109.50.241.227"
 # endif
 
 # define RED	"\e[0;31m"

@@ -1,5 +1,5 @@
 #include "reverse_shell.h"
-#include "libft/libft.h"
+#include "libft.h"
 
 int	error(char *message, int exit_code)
 {

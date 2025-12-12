@@ -6,7 +6,8 @@
 #   define _WIN32_WINT	0x0600
 #  endif
 #  include <winsock2.h>
-#  include <wc2tcpip.h>
+#  include <windows.h>
+#  include <ws2tcpip.h>
 #  pragma comment(lib, ws2_32.lib)
 #  define ISVALIDSOCKET(s) ((s) != INVALID_SOCKET)
 #  define CLOSESOCKET(s) (closesocket(s))

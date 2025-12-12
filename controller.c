@@ -75,7 +75,7 @@ int	main(void)
 
 	#if defined(_WIN32)
 		WSADATA	d;
-		if (WSAStarup(MAKEWORD(2, 2), &d))
+		if (WSAStartup(MAKEWORD(2, 2), &d))
 			return (1);
 	#endif
 

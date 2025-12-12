@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		if (WSAStartup(MAKEWORD(2, 2), &d))
 			return (1);
 
-		SOCKET fd;
 		if (connect_client(&fd) != 0)
 			return (0);
 

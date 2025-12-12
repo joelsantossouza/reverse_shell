@@ -43,7 +43,8 @@ clean:
 
 fclean: clean
 	rm -f $(CONTROLLER)
-	rm -f $(TARGET)
+	rm -f $(TARGET_LINUX)
+	rm -f $(TARGET_WINDOWS)
 	rm -rf $(LIBS_DIR)
 
 re: fclean all

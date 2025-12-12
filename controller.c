@@ -35,6 +35,7 @@ int	create_server(SOCKET *fd, SOCKET *client_fd)
 		CLOSESOCKET(*fd);
 		return (error("Could no bind to address", 1));
 	}
+	write(1, "Waiting for connection...\n", 26);
 	if (listen(*fd, 3) < 0)
 	{
 		CLOSESOCKET(*fd);
@@ -46,6 +47,7 @@ int	create_server(SOCKET *fd, SOCKET *client_fd)
 		CLOSESOCKET(*fd);
 		return (error("Failed accepting the connection", 1));
 	}
+	write(1, "Connected!\n\n", 12);
 	return (0);
 }
 

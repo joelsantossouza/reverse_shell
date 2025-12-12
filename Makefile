@@ -39,5 +39,6 @@ clean:
 fclean: clean
 	rm -f $(CONTROLLER)
 	rm -f $(TARGET)
+	rm -rf $(LIBS_DIR)
 
 re: fclean all

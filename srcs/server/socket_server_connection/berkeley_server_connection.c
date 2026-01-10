@@ -6,19 +6,20 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 16:11:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:33:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <string.h>
 #include <errno.h>
 #include "reverse_shell.h"
 
 # define SO_REUSEALL		(SO_REUSEADDR | SO_REUSEPORT)
 # define BACKLOG_MAXIMUM	3
 
-int	berkeley_server_connection(int *server_fd, int *client_fd)
+int	berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip)
 {
 	static char			client_ip_address[INET_ADDRSTRLEN];
 	int					opt;
@@ -33,7 +34,7 @@ int	berkeley_server_connection(int *server_fd, int *client_fd)
 	*server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (*server_fd == -1)
 		return (errno);
-	if (setsockopt(*server_fd, SOL_SOCKET, SO_REUSEALL, &opt, sizeof(opt) != 0))
+	if (setsockopt(*server_fd, SOL_SOCKET, SO_REUSEALL, &opt, sizeof(opt)) != 0)
 		return (close(*server_fd), errno);
 	if (bind(*server_fd, (struct sockaddr *)&server_addr, addr_len) < 0)
 		return (close(*server_fd), errno);
@@ -42,6 +43,8 @@ int	berkeley_server_connection(int *server_fd, int *client_fd)
 	*client_fd = accept(*server_fd, (struct sockaddr *)&server_addr, &addr_len);
 	if (*client_fd == -1)
 		return (close(*server_fd), errno);
-	if (inet_ntop() == NULL)
+	if (inet_ntop(AF_INET, &server_addr.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)
+		strlcpy(client_ip_address, "None", INET_ADDRSTRLEN);
+	*client_ip = client_ip_address;
 	return (SUCCESS);
 }

@@ -6,24 +6,41 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 16:06:52 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:26:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <stdint.h>
+#include "libft.h"
 #include "reverse_shell.h"
 
 int	main(void)
 {
-	int		server_fd;
-	int		client_fd;
-	char	*client_ip;
+	int			server_fd;
+	int			client_fd;
+	char		*client_ip;
+	char		*line;
+	uint64_t	linelen;
 
 	if (berkeley_server_connection(&server_fd, &client_fd, &client_ip) != 0)
 	{
-		fprintf(stderr, "%s", strerror(errno));
+		fprintf(stderr, "ERROR [%d]: %s\n", errno, strerror(errno));
 		return (1);
+	}
+	prompt_command(NULL, NULL, client_ip);
+	while (prompt_command(&line, &linelen, NULL))
+	{
+		write(client_fd, line, linelen);
+		while (TRUE)
+		{
+			linelen = ft_getline(&line, client_fd);
+			if (line == NULL)
+				break ;
+			write(STDOUT_FILENO, line, linelen);
+		}
 	}
 }

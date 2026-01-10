@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 17:26:08 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:39:03 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ int	main(void)
 			write(STDOUT_FILENO, line, linelen);
 		}
 	}
+	return (close(server_fd), close(client_fd), SUCCESS);
 }

@@ -6,10 +6,12 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 16:33:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 20:47:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _GNU_SOURCE
+#include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -40,7 +42,7 @@ int	berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip)
 		return (close(*server_fd), errno);
 	if (listen(*server_fd, BACKLOG_MAXIMUM) == -1)
 		return (close(*server_fd), errno);
-	*client_fd = accept(*server_fd, (struct sockaddr *)&server_addr, &addr_len);
+	*client_fd = accept4(*server_fd, (struct sockaddr *)&server_addr, &addr_len, SOCK_NONBLOCK);
 	if (*client_fd == -1)
 		return (close(*server_fd), errno);
 	if (inet_ntop(AF_INET, &server_addr.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)

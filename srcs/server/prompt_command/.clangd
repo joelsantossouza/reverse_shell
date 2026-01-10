@@ -1,3 +1,5 @@
 CompileFlags:
   Add:
     - "-I../../../libs/libft"
+    - "-I../../../includes"
+    - "-Iincludes"

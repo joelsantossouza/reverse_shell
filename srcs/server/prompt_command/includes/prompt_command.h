@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:50:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 17:07:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:03:32 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 // COLORS
 #define RED						"\e[0;31m"
 #define GREEN					"\e[0;32m"
+#define WHITE					"\e[0;37m"
 #define RESET_COLOR				"\e[0m"
 
 // COLORS STRLEN
 #define RED_STRLEN				7
 #define GREEN_STRLEN			7
+#define WHITE_STRLEN			7
 #define RESET_COLOR_STRLEN		4
 
 // CUSTOMIZED PROMPT
@@ -34,7 +36,7 @@
 
 #define PROMPT_END				"$> "
 #define PROMPT_END_STRLEN		3
-#define PROMPT_END_COLOR		RED
-#define PROMPT_END_COLOR_STRLEN	RED_STRLEN
+#define PROMPT_END_COLOR		WHITE
+#define PROMPT_END_COLOR_STRLEN	WHITE_STRLEN
 
 #endif

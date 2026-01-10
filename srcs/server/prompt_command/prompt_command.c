@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:38:07 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 17:26:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 21:54:20 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,10 @@
 #include "prompt_command.h"
 #include "libft.h"
 
-char	*prompt_command(char **cmdptr, uint64_t *cmdlen, char *new_host_ip)
+char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip)
 {
 	static char	*line = NULL;
-	static char	*host_ip = NULL;
 
-	if (new_host_ip)
-	{
-		host_ip = new_host_ip;
-		return (NULL);
-	}
 	write(STDOUT_FILENO, LOGO_COLOR, LOGO_COLOR_STRLEN);
 	write(STDOUT_FILENO, LOGO, LOGO_STRLEN);
 

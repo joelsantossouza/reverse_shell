@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 20:49:33 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:31:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(void)
 	int			server_fd;
 	int			client_fd;
 	char		*client_ip;
-	char		*line;
-	uint64_t	linelen;
+	char		*command;
+	uint64_t	command_len;
 
 	printf("Waiting for incomming connections...\n");
 	if (berkeley_server_connection(&server_fd, &client_fd, &client_ip) != 0)
@@ -32,18 +32,13 @@ int	main(void)
 		fprintf(stderr, "ERROR [%d]: %s\n", errno, strerror(errno));
 		return (1);
 	}
-	prompt_command(NULL, NULL, client_ip);
-	while (prompt_command(&line, &linelen, NULL))
+	while (prompt_command(&command, &command_len, client_ip))
 	{
-		write(client_fd, line, linelen);
+		write(client_fd, command, command_len);
 		usleep(500000);
-		while (TRUE)
-		{
-			linelen = ft_getline(&line, client_fd);
-			if (line == NULL)
-				break ;
-			write(STDOUT_FILENO, line, linelen);
-		}
+		receive_command_output(client_fd);
 	}
-	return (close(server_fd), close(client_fd), SUCCESS);
+	close(server_fd);
+	close(client_fd);
+	return (SUCCESS);
 }

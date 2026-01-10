@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/10 20:35:52 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/10 22:00:13 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,9 @@ SERVER_CONNECTION_DIR = $(SERVER_DIR)/socket_server_connection
 
 LINUX_SERVER_MAIN = $(SERVER_DIR)/berkeley_server.c
 LINUX_SERVER_CONNECTION_SRCS = $(SERVER_CONNECTION_DIR)/berkeley_server_connection.c
-PROMPT_COMMAND = $(PROMPT_COMMAND_DIR)/prompt_command.c
+PROMPT_COMMAND = $(addprefix $(PROMPT_COMMAND_DIR)/, prompt_command.c receive_command_output.c)
 
+INCLUDES += -I$(PROMPT_COMMAND_DIR)/includes
 LINUX_SERVER_OBJS += $(LINUX_SERVER_MAIN:.c=.o) $(LINUX_SERVER_CONNECTION_SRCS:.c=.o) \
 	$(PROMPT_COMMAND:.c=.o)
 

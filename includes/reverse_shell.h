@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 14:48:25 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 19:11:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/10 21:56:56 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 int		berkeley_client_connection(int	*client_fd);
 
 // SERVER PROMPT COMMMAND
-char	*prompt_command(char **cmdptr, uint64_t *cmdlen, char *new_host_ip);
+char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip);
+void	receive_command_output(int client_fd);
 
 // SERVER SOCKET CONNECTIONS
 int		berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip);

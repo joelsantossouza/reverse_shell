@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/10 22:00:13 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/10 22:34:30 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ $(LIBFT):
 
 clean:
 	rm -f $(LINUX_CLIENT_OBJS)
+	rm -f $(LINUX_SERVER_OBJS)
 
 fclean: clean
 	rm -f $(LINUX_CLIENT)

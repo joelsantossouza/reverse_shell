@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 23:56:52 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 19:46:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:06:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd,
 	opt = 1;
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = INADDR_ANY;
-	addr.sin_port = htons(PORT);
+	addr.sin_port = htons(SERVER_PORT);
 	*server_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (*server_fd == INVALID_SOCKET)
 		return (1);

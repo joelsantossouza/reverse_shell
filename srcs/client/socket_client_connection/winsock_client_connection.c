@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 22:38:39 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 19:19:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:06:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	winsock_client_connection(SOCKET *client_fd)
 	struct sockaddr_in	server_addr;
 
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(PORT);
+	server_addr.sin_port = htons(SERVER_PORT);
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return (WSAGetLastError());
 	*client_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);

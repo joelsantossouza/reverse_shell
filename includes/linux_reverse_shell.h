@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 14:48:25 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 19:16:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:02:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 # include <stdint.h>
 
 // UTILS
-# define TRUE		1
-# define FALSE		0
-# define SUCCESS	0
+# define TRUE				1
+# define FALSE				0
+# define SUCCESS			0
 
 // CONNECTION INFORMATIONS
-# ifndef PORT
-#  define PORT		4242
+# ifndef SERVER_PORT
+#  define SERVER_PORT		4242
 # endif
 
 # ifndef SERVER_IP
-#  define SERVER_IP	"127.0.0.1"
+#  define SERVER_IP			"127.0.0.1"
 # endif
 
 # define SO_REUSEALL		15

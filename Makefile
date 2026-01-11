@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 17:48:15 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 20:05:45 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ WINDOWS_LINKING = -lws2_32
 
 FLAGS = -Wall -Wextra -Werror -g
 WINDOWS_FLAGS = -Wall -Wextra -Werror
+SERVER_IP = 127.0.0.1
+SERVER_PORT = 4242
+
 SRCS_DIR = srcs
 INFECT_PROGRAM = $(SRCS_DIR)/program_test.c
 INCLUDES = -Iincludes
@@ -119,13 +122,13 @@ $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
 	make -C $(dir $@) CC="$(CC)" AR="$(AR)" FLAGS="$(FLAGS)"
 
 %_sharedOS_linux.o: %_sharedOS.c
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -DSERVER_IP=\"$(SERVER_IP)\" -DSERVER_PORT=$(SERVER_PORT) -c $< -o $@
 
 %_sharedOS_windows.o: %_sharedOS.c
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -DSERVER_IP=\"$(SERVER_IP)\" -DSERVER_PORT=$(SERVER_PORT) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -DSERVER_IP=\"$(SERVER_IP)\" -DSERVER_PORT=$(SERVER_PORT) -c $< -o $@
 
 clean:
 	rm -f $(LINUX_CLIENT_OBJS)

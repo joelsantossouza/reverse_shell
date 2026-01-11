@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 16:02:03 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 16:10:41 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ CC = cc
 MINGW = x86_64-w64-mingw32-gcc
 AR = ar rcs
 WIN_AR = x86_64-w64-mingw32-ar rcs
+WINDOWS_LINKING = -lws2_32
+
 FLAGS = -Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 INFECT_PROGRAM = $(SRCS_DIR)/program_test.c
@@ -95,12 +97,12 @@ $(LINUX_CLIENT): $(LINUX_CLIENT_OBJS) $(INFECT_PROGRAM)
 $(WINDOWS_SERVER): CC = $(MINGW)
 $(WINDOWS_SERVER): AR = $(WIN_AR)
 $(WINDOWS_SERVER): $(WINDOWS_LIBFT) $(WINDOWS_SERVER_OBJS)
-	$(MINGW) $(WINDOWS_SERVER_OBJS) $(WINDOWS_LIBFT) -o $@ -lws2_32
+	$(MINGW) $(WINDOWS_SERVER_OBJS) $(WINDOWS_LIBFT) -o $@ $(WINDOWS_LINKING)
 
 $(WINDOWS_CLIENT): CC = $(MINGW)
 $(WINDOWS_CLIENT): FLAGS += -include $(WINDOWS_BACKDOOR)
 $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
-	$(MINGW) $^ -o $@ -lws2_32
+	$(MINGW) $^ -o $@ $(WINDOWS_LINKING)
 
 %libft.a:
 	@if [ ! -d "$(dir $@)" ]; then \

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 13:36:51 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:27:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include "libft.h"
 #include "linux_reverse_shell.h"
+#include "prompt_command.h"
 
 int	main(void)
 {
@@ -34,7 +35,9 @@ int	main(void)
 	}
 	while (prompt_command(&command, &command_len, client_ip))
 	{
+		command_len -= command[command_len - 1] == '\n';
 		write(client_fd, command, command_len);
+		write(client_fd, SEND_EOF, SEND_EOF_STRLEN);
 		receive_command_output(client_fd);
 	}
 	close(server_fd);

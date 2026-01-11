@@ -1,3 +1,4 @@
 CompileFlags:
   Add:
     - "-I../../includes/"
+    - "-I./prompt_command/includes"

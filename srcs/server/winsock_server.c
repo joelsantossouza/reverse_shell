@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 00:20:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:53:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:19:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int	main(void)
 	}
 	while (prompt_command(&command, &command_len, client_ip))
 	{
-		int bytes_sent = send(client_fd, command, (int)command_len, 0);
+		int bytes_sent = send(client_fd, command, command_len, 0);
 		if (bytes_sent == SOCKET_ERROR) {
 			fprintf(stderr, "Send failed: %d\n", WSAGetLastError());
 			break;
 		}
-		Sleep(500);
 		receive_command_output(client_fd);
 	}
 	closesocket(server_fd);

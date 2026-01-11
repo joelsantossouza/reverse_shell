@@ -6,12 +6,10 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:58:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:17:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _GNU_SOURCE
-#include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -21,10 +19,10 @@
 int	berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip)
 {
 	static char			client_ip_address[INET_ADDRSTRLEN];
-	int					opt;
 	struct sockaddr_in	server_addr;
 	struct sockaddr_in	client_info;
 	socklen_t			addr_len;
+	int					opt;
 
 	opt = 1;
 	server_addr.sin_family = AF_INET;
@@ -40,7 +38,7 @@ int	berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip)
 	if (listen(*server_fd, BACKLOG_MAXIMUM) == -1)
 		return (close(*server_fd), errno);
 	addr_len = sizeof(client_info);
-	*client_fd = accept4(*server_fd, (struct sockaddr *)&client_info, &addr_len, SOCK_NONBLOCK);
+	*client_fd = accept(*server_fd, (struct sockaddr *)&client_info, &addr_len);
 	if (*client_fd == -1)
 		return (close(*server_fd), errno);
 	if (inet_ntop(AF_INET, &client_info.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)

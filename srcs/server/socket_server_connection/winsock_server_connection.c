@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 23:56:52 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 01:00:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:17:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 int	winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **client_ip)
 {
 	static char			client_ip_address[INET_ADDRSTRLEN];
-	int					opt;
 	struct sockaddr_in	server_addr;
 	struct sockaddr_in	client_info;
-	int					addr_len;
 	WSADATA				wsa;
+	int					addr_len;
+	int					opt;
 
 	opt = 1;
 	server_addr.sin_family = AF_INET;
@@ -57,14 +57,6 @@ int	winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **clien
 		int	err = WSAGetLastError();
 		closesocket(*server_fd);
 		return (WSACleanup(), err);
-	}
-	u_long	mode = 1;
-	if (ioctlsocket(*client_fd, FIONBIO, &mode) != NO_ERROR)
-	{
-		int err = WSAGetLastError();
-        closesocket(*client_fd);
-        closesocket(*server_fd);
-        return (WSACleanup(), err);
 	}
 	if (inet_ntop(AF_INET, &client_info.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)
         strncpy_s(client_ip_address, INET_ADDRSTRLEN, "None", _TRUNCATE);

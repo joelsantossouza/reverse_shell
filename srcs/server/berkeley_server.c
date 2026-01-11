@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:55:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:36:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(void)
 	while (prompt_command(&command, &command_len, client_ip))
 	{
 		write(client_fd, command, command_len);
-		usleep(500000);
 		receive_command_output(client_fd);
 	}
 	close(server_fd);

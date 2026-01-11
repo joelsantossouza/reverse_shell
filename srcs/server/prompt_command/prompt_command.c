@@ -6,13 +6,15 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:38:07 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 21:54:20 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:04:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include "linux_reverse_shell.h"
 #include "prompt_command.h"
 #include "libft.h"
 
@@ -33,6 +35,7 @@ char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip)
 	*cmdlen = ft_getline(&line, STDIN_FILENO);
 	if (*cmdlen <= 0)
 		return (NULL);
+	*cmdlen -= line[*cmdlen - 1] == '\n';
 	*cmdptr = line;
 	return (line);
 }

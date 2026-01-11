@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 22:00:38 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 22:34:06 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,7 @@ $(WINDOWS_CLIENT): CC = $(MINGW)
 $(WINDOWS_CLIENT): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_CLIENT): FLAGS += -include $(WINDOWS_BACKDOOR)
 $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
-	$(MINGW) $^ -o $@ $(WINDOWS_LINKING) -mwindows
+	$(MINGW) $^ -o $@ $(WINDOWS_LINKING)
 
 %libft.a:
 	@if [ ! -d "$(dir $@)" ]; then \

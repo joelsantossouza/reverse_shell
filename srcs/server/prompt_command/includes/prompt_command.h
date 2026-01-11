@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:50:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 15:31:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:35:36 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@
 // PROMPT CONTROL
 # define REVSHELL_EOF				"<END_OF_FILE>"
 
-# define SEND_EOF					";echo -e \'\n" REVSHELL_EOF "\'\n"
-# define SEND_EOF_STRLEN			26
+# define SEND_REVSHELL_EOF			";echo -e \'\n" REVSHELL_EOF "\'\n"
+# define SEND_REVSHELL_EOF_STRLEN	26
 
 // PROTOTYPES
 char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip);

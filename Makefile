@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 20:05:45 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 21:52:12 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 MINGW = x86_64-w64-mingw32-gcc
 AR = ar rcs
 WIN_AR = x86_64-w64-mingw32-ar rcs
-WINDOWS_LINKING = -lws2_32
+WINDOWS_LINKING = -static -static-libgcc -mwindows -lws2_32
 
 FLAGS = -Wall -Wextra -Werror -g
 WINDOWS_FLAGS = -Wall -Wextra -Werror

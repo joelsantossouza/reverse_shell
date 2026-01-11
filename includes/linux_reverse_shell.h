@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_shell.h                                    :+:      :+:    :+:   */
+/*   linux_reverse_shell.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 14:48:25 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 21:56:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:58:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # ifndef SERVER_IP
 #  define SERVER_IP	"127.0.0.1"
 # endif
+
+# define SO_REUSEALL		(SO_REUSEADDR | SO_REUSEPORT)
+# define BACKLOG_MAXIMUM	3
+
 
 // CLIENT SOCKET CONNECTIONS
 int		berkeley_client_connection(int	*client_fd);

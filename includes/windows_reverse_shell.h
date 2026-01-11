@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   receive_command_output.c                           :+:      :+:    :+:   */
+/*   windows_reverse_shell.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/10 21:47:53 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:56:07 by joesanto         ###   ########.fr       */
+/*   Created: 2026/01/11 00:50:26 by joesanto          #+#    #+#             */
+/*   Updated: 2026/01/11 01:34:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdint.h>
-#include "linux_reverse_shell.h"
-#include "libft.h"
+#ifndef WINDOWS_REVERSE_SHELL_H
+# define WINDOWS_REVERSE_SHELL_H
 
-void	receive_command_output(int client_fd)
-{
-	static char		*output_line = NULL;
-	static uint64_t	output_linelen;
+# include <winsock2.h>
+# include "linux_reverse_shell.h"
 
-	while (TRUE)
-	{
-		output_linelen = ft_getline(&output_line, client_fd);
-		if (output_line == NULL)
-			break ;
-		write(STDOUT_FILENO, output_line, output_linelen);
-	}
-}
+// CLIENT SOCKET CONNETIONS
+int	winsock_client_connection(SOCKET *client_fd);
+
+// SERVER SOCKET CONNECTIONS
+int	winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **client_ip);
+
+#endif

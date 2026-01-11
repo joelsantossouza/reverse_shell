@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 01:44:45 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 15:54:15 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,9 +114,13 @@ $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
 clean:
 	rm -f $(LINUX_CLIENT_OBJS)
 	rm -f $(LINUX_SERVER_OBJS)
+	rm -f $(WINDOWS_CLIENT_OBJS)
+	rm -f $(WINDOWS_SERVER_OBJS)
 
 fclean: clean
 	rm -f $(LINUX_CLIENT)
 	rm -f $(LINUX_SERVER)
+	rm -f $(WINDOWS_CLIENT).exe
+	rm -f $(WINDOWS_SERVER).exe
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 19:39:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:08:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	berkeley_server_connection(int *server_fd, int *client_fd,
 	opt = 1;
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = INADDR_ANY;
-	addr.sin_port = htons(PORT);
+	addr.sin_port = htons(SERVER_PORT);
 	*server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (*server_fd == -1)
 		return (errno);

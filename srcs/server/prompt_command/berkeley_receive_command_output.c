@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   receive_command_output.c                           :+:      :+:    :+:   */
+/*   berkeley_receive_command_output.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 21:47:53 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 15:32:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:44:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "linux_reverse_shell.h"
 #include "prompt_command.h"
 
-void	receive_command_output(int client_fd)
+void	berkeley_receive_command_output(int client_fd)
 {
 	static char		*output_line = NULL;
 	static uint64_t	output_linelen;

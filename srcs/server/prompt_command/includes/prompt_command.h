@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:50:47 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 15:35:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:57:27 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@
 
 // PROTOTYPES
 char	*prompt_command(char **cmdptr, uint64_t *cmdlen, const char *host_ip);
-void	receive_command_output(int client_fd);
+void	berkeley_receive_command_output(int client_fd);
 
 #endif

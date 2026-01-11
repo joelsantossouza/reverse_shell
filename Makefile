@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 16:54:42 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/11 17:48:15 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,24 +70,24 @@ SERVER_DIR = $(SRCS_DIR)/server
 PROMPT_COMMAND_DIR = $(SERVER_DIR)/prompt_command
 SERVER_CONNECTION_DIR = $(SERVER_DIR)/socket_server_connection
 
-PROMPT_COMMAND = $(addprefix $(PROMPT_COMMAND_DIR)/, prompt_command_sharedOS.c \
-				 receive_command_output_sharedOS.c \
-)
+PROMPT_COMMAND = $(PROMPT_COMMAND_DIR)/prompt_command_sharedOS.c
 INCLUDES += -I$(PROMPT_COMMAND_DIR)/includes
 
 # (LINUX)
-LINUX_PROMPT_COMMAND_OBJS = $(addsuffix _linux.o, $(basename $(PROMPT_COMMAND)))
+LINUX_PROMPT_COMMAND_OBJ = $(basename $(PROMPT_COMMAND))_linux.o
+LINUX_RECEIVE_OUTPUT = $(PROMPT_COMMAND_DIR)/berkeley_receive_command_output.c
 LINUX_SERVER_MAIN = $(SERVER_DIR)/berkeley_server.c
 LINUX_SERVER_CONNECTION_SRCS = $(SERVER_CONNECTION_DIR)/berkeley_server_connection.c
 LINUX_SERVER_OBJS += $(LINUX_SERVER_MAIN:.c=.o) $(LINUX_SERVER_CONNECTION_SRCS:.c=.o) \
-	$(LINUX_PROMPT_COMMAND_OBJS)
+	$(LINUX_RECEIVE_OUTPUT:.c=.o) $(LINUX_PROMPT_COMMAND_OBJ)
 
 # (WINDOWS)
-WINDOWS_PROMPT_COMMAND_OBJS = $(addsuffix _windows.o, $(basename $(PROMPT_COMMAND)))
+WINDOWS_PROMPT_COMMAND_OBJ = $(basename $(PROMPT_COMMAND))_windows.o
+WINDOWS_RECEIVE_OUTPUT = $(PROMPT_COMMAND_DIR)/winsock_receive_command_output.c
 WINDOWS_SERVER_MAIN = $(SERVER_DIR)/winsock_server.c
 WINDOWS_SERVER_CONNECTION_SRCS = $(SERVER_CONNECTION_DIR)/winsock_server_connection.c
 WINDOWS_SERVER_OBJS += $(WINDOWS_SERVER_MAIN:.c=.o) $(WINDOWS_SERVER_CONNECTION_SRCS:.c=.o) \
-	$(WINDOWS_PROMPT_COMMAND_OBJS)
+	$(WINDOWS_RECEIVE_OUTPUT:.c=.o) $(WINDOWS_PROMPT_COMMAND_OBJ)
 
 # -------------------------------- COMPILATION ------------------------------- #
 

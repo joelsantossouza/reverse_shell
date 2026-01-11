@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:00:43 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 15:36:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:30:56 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(void)
 		command_len -= command[command_len - 1] == '\n';
 		write(client_fd, command, command_len);
 		write(client_fd, SEND_REVSHELL_EOF, SEND_REVSHELL_EOF_STRLEN);
-		receive_command_output(client_fd);
+		berkeley_receive_command_output(client_fd);
 	}
 	close(server_fd);
 	close(client_fd);

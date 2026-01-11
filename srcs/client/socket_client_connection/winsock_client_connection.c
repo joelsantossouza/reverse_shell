@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 22:38:39 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 01:35:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:19:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	winsock_client_connection(SOCKET *client_fd)
 		closesocket(*client_fd);
 		return (WSAGetLastError());
 	}
-	if (connect(*client_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == SOCKET_ERROR)
+	if (connect(*client_fd, (struct sockaddr *)&server_addr,
+			sizeof(server_addr)) == SOCKET_ERROR)
 	{
 		closesocket(*client_fd);
 		return (WSAGetLastError());

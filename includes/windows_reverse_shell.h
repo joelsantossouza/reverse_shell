@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 00:50:26 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 18:57:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:17:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		winsock_client_connection(SOCKET *client_fd);
 
 // SERVER SOCKET CONNECTIONS
 void	winsock_receive_command_output(SOCKET client_fd);
-int		winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd, char **client_ip);
+int		winsock_server_connection(SOCKET *server_fd, SOCKET *client_fd,
+			char **client_ip);
 
 #endif

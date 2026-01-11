@@ -6,12 +6,12 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 14:48:25 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 15:28:35 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:16:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REVERSE_SHELL_H
-# define REVERSE_SHELL_H
+#ifndef LINUX_REVERSE_SHELL_H
+# define LINUX_REVERSE_SHELL_H
 
 # include <stdint.h>
 
@@ -29,14 +29,14 @@
 #  define SERVER_IP	"127.0.0.1"
 # endif
 
-# define SO_REUSEALL		(SO_REUSEADDR | SO_REUSEPORT)
+# define SO_REUSEALL		15
 # define BACKLOG_MAXIMUM	3
-
 
 // CLIENT SOCKET CONNECTIONS
 int		berkeley_client_connection(int	*client_fd);
 
 // SERVER SOCKET CONNECTIONS
-int		berkeley_server_connection(int *server_fd, int *client_fd, char **client_ip);
+int		berkeley_server_connection(int *server_fd, int *client_fd,
+			char **client_ip);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 14:39:53 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 00:54:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:18:58 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	berkeley_client_connection(int	*client_fd)
 		close(*client_fd);
 		return (errno);
 	}
-	if (connect(*client_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1)
+	if (connect(*client_fd, (struct sockaddr *)&server_addr,
+			sizeof(server_addr)) == -1)
 	{
 		close(*client_fd);
 		return (errno);

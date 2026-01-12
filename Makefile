@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/11 22:34:06 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/12 17:22:06 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SERVER_PORT = 4242
 SRCS_DIR = srcs
 INFECT_PROGRAM = $(SRCS_DIR)/program_test.c
 INCLUDES = -Iincludes
+EXTRA_OBJS =
 
 # ----------------------------------- BINS ----------------------------------- #
 BIN_DIR = bin
@@ -97,23 +98,23 @@ WINDOWS_SERVER_OBJS += $(WINDOWS_SERVER_MAIN:.c=.o) $(WINDOWS_SERVER_CONNECTION_
 all: $(LINUX_SERVER) $(LINUX_CLIENT) $(WINDOWS_SERVER) $(WINDOWS_CLIENT)
 
 $(LINUX_SERVER): $(LINUX_LIBFT) $(LINUX_SERVER_OBJS)
-	$(CC) $(LINUX_SERVER_OBJS) $(LINUX_LIBFT) -o $@
+	$(CC) $(LINUX_SERVER_OBJS) $(EXTRA_OBJS) $(LINUX_LIBFT) -o $@
 
 $(LINUX_CLIENT): FLAGS += -include $(LINUX_BACKDOOR)
 $(LINUX_CLIENT): $(LINUX_CLIENT_OBJS) $(INFECT_PROGRAM)
-	$(CC) $^ -o $@
+	$(CC) $^ $(EXTRA_OBJS) -o $@
 
 $(WINDOWS_SERVER): CC = $(MINGW)
 $(WINDOWS_SERVER): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_SERVER): AR = $(WIN_AR)
 $(WINDOWS_SERVER): $(WINDOWS_LIBFT) $(WINDOWS_SERVER_OBJS)
-	$(MINGW) $(WINDOWS_SERVER_OBJS) $(WINDOWS_LIBFT) -o $@ $(WINDOWS_LINKING)
+	$(MINGW) $(WINDOWS_SERVER_OBJS) $(EXTRA_OBJS) $(WINDOWS_LIBFT) -o $@ $(WINDOWS_LINKING)
 
 $(WINDOWS_CLIENT): CC = $(MINGW)
 $(WINDOWS_CLIENT): FLAGS = $(WINDOWS_FLAGS)
 $(WINDOWS_CLIENT): FLAGS += -include $(WINDOWS_BACKDOOR)
 $(WINDOWS_CLIENT): $(WINDOWS_CLIENT_OBJS) $(INFECT_PROGRAM)
-	$(MINGW) $^ -o $@ $(WINDOWS_LINKING)
+	$(MINGW) $^ $(EXTRA_OBJS) -o $@ $(WINDOWS_LINKING)
 
 %libft.a:
 	@if [ ! -d "$(dir $@)" ]; then \

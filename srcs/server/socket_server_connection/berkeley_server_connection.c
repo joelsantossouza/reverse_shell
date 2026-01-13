@@ -6,12 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 15:21:40 by joesanto          #+#    #+#             */
-/*   Updated: 2026/01/11 20:08:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:22:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <bsd/string.h>
 #include <string.h>
 #include <errno.h>
 #include "linux_reverse_shell.h"

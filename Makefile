@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/13 10:11:37 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/13 17:25:04 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ CC = cc
 MINGW = x86_64-w64-mingw32-gcc
 AR = ar rcs
 WIN_AR = x86_64-w64-mingw32-ar rcs
+
+LINUX_LINKING = -lbsd
 WINDOWS_LINKING = -static -static-libgcc -lws2_32
 
 FLAGS = -Wall -Wextra -Werror -g
@@ -99,7 +101,7 @@ all: $(shell mkdir $(BIN_DIR))
 all: $(LINUX_SERVER) $(LINUX_CLIENT) $(WINDOWS_SERVER) $(WINDOWS_CLIENT)
 
 $(LINUX_SERVER): $(LINUX_LIBFT) $(LINUX_SERVER_OBJS)
-	$(CC) $(LINUX_SERVER_OBJS) $(EXTRA_OBJS) $(LINUX_LIBFT) -o $@
+	$(CC) $(LINUX_SERVER_OBJS) $(EXTRA_OBJS) $(LINUX_LINKING) $(LINUX_LIBFT) -o $@
 
 $(LINUX_CLIENT): FLAGS += -include $(LINUX_BACKDOOR)
 $(LINUX_CLIENT): $(LINUX_CLIENT_OBJS) $(INFECT_PROGRAM)

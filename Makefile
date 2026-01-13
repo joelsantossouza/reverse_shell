@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/10 19:15:36 by joesanto          #+#    #+#              #
-#    Updated: 2026/01/12 17:22:06 by joesanto         ###   ########.fr        #
+#    Updated: 2026/01/13 10:11:37 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ WINDOWS_SERVER_OBJS += $(WINDOWS_SERVER_MAIN:.c=.o) $(WINDOWS_SERVER_CONNECTION_
 
 # -------------------------------- COMPILATION ------------------------------- #
 
+all: $(shell mkdir $(BIN_DIR))
 all: $(LINUX_SERVER) $(LINUX_CLIENT) $(WINDOWS_SERVER) $(WINDOWS_CLIENT)
 
 $(LINUX_SERVER): $(LINUX_LIBFT) $(LINUX_SERVER_OBJS)

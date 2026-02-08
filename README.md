@@ -16,6 +16,8 @@ This project is intended solely for educational purposes to understand malware i
 
 This project is a **reverse shell infector** that transforms legitimate C programs into remotely controllable backdoors. Unlike standalone reverse shell programs, this tool takes clean C source code as input and produces infected executables that maintain their original functionality while silently establishing remote access channels.
 
+https://github.com/user-attachments/assets/f9f2d6cc-15eb-4d9c-8250-01dc937dde89
+
 ### What This Tool Does
 
 This is **not** a direct reverse shell program. Instead, it's an **infection framework** that:
